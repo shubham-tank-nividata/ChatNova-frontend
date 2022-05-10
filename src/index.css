@@ -1,0 +1,95 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	color: #22334d;
+	background-color: #2b3c46;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
+}
+
+.signup-container,
+.signin-container {
+	position: relative;
+	margin: 10vh auto;
+	width: 30rem;
+	background-color: #a5d6eb;
+	/* width: fit-content; */
+	border-radius: 0.7rem;
+	padding: 2rem;
+}
+
+.signup-container h1,
+.signin-container h1,
+.signin-container h3 {
+	text-align: center;
+}
+
+.signup-container input,
+.signin-container input {
+	font-size: 0.9rem;
+	font-weight: 700;
+}
+
+.signup-container select {
+	font-size: 0.9rem;
+	color: #767;
+	font-weight: 700;
+}
+
+.submit-btn {
+	color: white;
+	background-color: #5e9bc7;
+}
+
+.submit-btn:hover {
+	color: white !important;
+	background-color: #4e82a7;
+}
+
+@media only screen and (max-width: 500px) {
+	.signup-container {
+		width: 100%;
+	}
+}
+
+.next-icon {
+	margin-left: 0.7rem;
+	margin-bottom: 0.15rem;
+}
+
+.next-icon path {
+	stroke: white;
+	stroke: rgb(55, 54, 54);
+	stroke-width: 3;
+}
+
+.prev-icon {
+	position: absolute;
+	left: 2rem;
+	top: 2.45rem;
+	cursor: pointer;
+	width: 2rem !important;
+	height: 2rem !important;
+}
+
+.prev-icon path {
+	color: rgb(55, 54, 54) !important;
+	stroke-width: 50;
+}
+
+.signup-container .alert-danger,
+.signin-container .alert-danger {
+	font-size: 0.8rem !important;
+}
