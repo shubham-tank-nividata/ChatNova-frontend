@@ -4,7 +4,7 @@ import { GrLinkNext } from "react-icons/gr";
 import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import Message from "../contexts/Message";
-import axiosInstance from "../api";
+import axiosInstance from "../axios";
 
 const SignUp = () => {
 	const message = useContext(Message);
@@ -101,7 +101,7 @@ const SignUp = () => {
 		// const data = await res.json();
 
 		try {
-			const res = await axiosInstance.post("signup/", {
+			const res = await axiosInstance.post("users/signup/", {
 				user: {
 					username: `${name.replaceAll(" ", "")}_${Math.random()
 						.toString(36)
@@ -115,6 +115,7 @@ const SignUp = () => {
 			const data = res.data;
 			if (data.success) {
 				message.value = data.success;
+				message.type = "success";
 				navigate("/signin");
 			}
 		} catch (err) {
