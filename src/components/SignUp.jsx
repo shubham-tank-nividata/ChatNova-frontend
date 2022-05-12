@@ -81,25 +81,6 @@ const SignUp = () => {
 
 		if (!fieldValidation()) return;
 
-		// const res = await fetch("http://127.0.0.1:8000/api/signup/", {
-		// 	method: "POST",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	body: JSON.stringify({
-		// user: {
-		// 	username: `${name.replaceAll(" ", "")}_${Math.random()
-		// 		.toString(36)
-		// 		.slice(2)}`,
-		// 	email,
-		// 	password: password1,
-		// },
-		// name,
-		// date_of_birth: `${dob.year}-${dob.month}-${dob.date}`,
-		// 	}),
-		// });
-		// const data = await res.json();
-
 		try {
 			const res = await axiosInstance.post("users/signup/", {
 				user: {

@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Outlet, NavLink, Link } from "react-router-dom";
-import "../container.css";
+import "../styles/container.css";
 import axiosInstance from "../axios";
+import { decode as atob } from "base-64";
+import { FiLogOut } from "react-icons/fi";
 
 const Container = () => {
-	const [user, setUser] = useState({});
+	const [userProfile, setUserProfile] = useState({});
+	const userid = JSON.parse(
+		atob(localStorage.getItem("access_token").split(".")[1])
+	).user_id;
 
 	useEffect(() => {
 		(async () => {
 			try {
 				axiosInstance.defaults.headers["Authorization"] =
 					"JWT " + localStorage.getItem("access_token");
-				const res = await axiosInstance.get(`users/loggeduser/`);
-				setUser(res.data);
+				const res = await axiosInstance.get(`users/profile/${userid}`);
+				setUserProfile(res.data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -54,7 +59,7 @@ const Container = () => {
 							<li className="nav-item">
 								<NavLink
 									className="nav-link"
-									to="/profile"
+									to={`/profile/${userid}`}
 									style={({ isActive }) => {
 										return { color: isActive ? "white" : "" };
 									}}
@@ -63,13 +68,28 @@ const Container = () => {
 								</NavLink>
 							</li>
 						</ul>
-						<span className="navbar-text text-light">{user.name}</span>
-						<span className="navbar-text">
-							<Link className="btn" to="/logout">
-								{" "}
-								logout{" "}
-							</Link>
-						</span>
+
+						<div className="btn-group">
+							<p
+								type="button"
+								className="dropdown-toggle text-white mb-0"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								{userProfile.name}{" "}
+							</p>
+							<ul className="dropdown-menu dropdown-menu-end">
+								<li>
+									<Link
+										className="dropdown-item text-danger d-flex justify-content-between align-items-center"
+										to="/logout"
+									>
+										<span>logout</span>
+										<FiLogOut />
+									</Link>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</nav>

@@ -5,8 +5,6 @@ import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import Message from "./contexts/Message";
 import Logout from "./components/Logout";
-import axiosInstance from "./axios";
-import { useState, useEffect } from "react";
 import Container from "./components/Container";
 import Profile from "./components/Profile";
 
@@ -17,7 +15,9 @@ function App() {
 				<Route path="" element={<Container />}>
 					<Route path="" element={<Navigate replace to="home/" />} />
 					<Route path="home" element={<Home />} />
-					<Route path="profile" element={<Profile />} />
+					<Route path="profile">
+						<Route path=":userid" element={<Profile />} />
+					</Route>
 				</Route>
 				<Route path="logout/" element={<Logout />} />
 				<Route path="signin/" element={<SignIn />} />

@@ -1,0 +1,33 @@
+.profile-container {
+	margin-top: 1rem;
+	background-color: #f0f8fc;
+	max-width: 50rem;
+	padding: 2rem;
+}
+
+img.profile-pic-img {
+	position: relative;
+	display: block;
+	margin: 3rem auto;
+	border: 1px solid #2b3c46;
+	box-shadow: 0 0 0.3rem black;
+	padding: 0.5rem;
+	width: 15rem;
+	height: 15rem;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+@media only screen and (max-width: 800px) {
+	img.profile-pic-img {
+		width: 40vw;
+		height: 40vw;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	img.profile-pic-img {
+		width: 50vw;
+		height: 50vw;
+	}
+}
