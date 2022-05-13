@@ -6,18 +6,15 @@ import { decode as atob } from "base-64";
 import { FiLogOut } from "react-icons/fi";
 
 const Container = () => {
-	const [userProfile, setUserProfile] = useState({});
-	const userid = JSON.parse(
-		atob(localStorage.getItem("access_token").split(".")[1])
-	).user_id;
+	const [user, setUser] = useState({});
 
 	useEffect(() => {
 		(async () => {
 			try {
 				axiosInstance.defaults.headers["Authorization"] =
 					"JWT " + localStorage.getItem("access_token");
-				const res = await axiosInstance.get(`users/profile/${userid}`);
-				setUserProfile(res.data);
+				const res = await axiosInstance.get(`users/loggeduser/`);
+				setUser(res.data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -59,7 +56,12 @@ const Container = () => {
 							<li className="nav-item">
 								<NavLink
 									className="nav-link"
-									to={`/profile/${userid}`}
+									to={`/profile/${
+										localStorage.getItem("access_token") &&
+										JSON.parse(
+											atob(localStorage.getItem("access_token").split(".")[1])
+										).user_id
+									}`}
 									style={({ isActive }) => {
 										return { color: isActive ? "white" : "" };
 									}}
@@ -76,7 +78,7 @@ const Container = () => {
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
 							>
-								{userProfile.name}{" "}
+								{user.name}{" "}
 							</p>
 							<ul className="dropdown-menu dropdown-menu-end">
 								<li>

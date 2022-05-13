@@ -3,12 +3,19 @@
 	background-color: #f0f8fc;
 	max-width: 50rem;
 	padding: 2rem;
+	box-shadow: 0 0 1rem rgb(166, 166, 166);
+	border-radius: 0.5rem;
+}
+
+.profile-pic a {
+	display: inline;
+	width: min-content;
 }
 
 img.profile-pic-img {
 	position: relative;
 	display: block;
-	margin: 3rem auto;
+	margin: 3rem auto 2rem auto;
 	border: 1px solid #2b3c46;
 	box-shadow: 0 0 0.3rem black;
 	padding: 0.5rem;
@@ -16,6 +23,35 @@ img.profile-pic-img {
 	height: 15rem;
 	border-radius: 50%;
 	object-fit: cover;
+}
+
+.lightboxOverlay {
+	max-width: 100vw !important;
+	height: auto;
+}
+
+.user-detail {
+	padding-top: 4%;
+}
+
+.following,
+.followers {
+	margin: 3%;
+	padding: 1% 5%;
+	background-color: rgb(212, 211, 211);
+	border-radius: 0.5rem;
+	transition: all 0.5s;
+}
+
+.following:hover,
+.followers:hover {
+	cursor: pointer;
+	background-color: rgb(193, 190, 190);
+}
+
+.following:active,
+.followers:active {
+	background-color: rgb(161, 158, 158);
 }
 
 @media only screen and (max-width: 800px) {
