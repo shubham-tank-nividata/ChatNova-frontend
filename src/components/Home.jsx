@@ -1,4 +1,5 @@
 import React from "react";
+import { decode as atob } from "base-64";
 
 const Home = () => {
 	return (

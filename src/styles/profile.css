@@ -12,6 +12,11 @@
 	width: min-content;
 }
 
+.image-input {
+	line-height: initial;
+	z-index: 1000;
+}
+
 img.profile-pic-img {
 	position: relative;
 	display: block;
@@ -52,6 +57,22 @@ img.profile-pic-img {
 .following:active,
 .followers:active {
 	background-color: rgb(161, 158, 158);
+}
+
+.lb-data .lb-details {
+	width: fit-content !important	;
+}
+
+.input-container {
+	display: flex;
+	justify-content: end;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+.input-container * {
+	margin-left: 0.3rem;
+	margin-right: 0.3rem;
+	cursor: pointer;
 }
 
 @media only screen and (max-width: 800px) {
