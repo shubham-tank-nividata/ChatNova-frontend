@@ -7,6 +7,7 @@ import Message from "./contexts/Message";
 import Logout from "./components/Logout";
 import Container from "./components/Container";
 import Profile from "./components/Profile";
+import FollowerFollowing from "./components/FollowerFollowing";
 
 function App() {
 	return (
@@ -16,7 +17,16 @@ function App() {
 					<Route path="" element={<Navigate replace to="home/" />} />
 					<Route path="home" element={<Home />} />
 					<Route path="profile">
-						<Route path=":userid" element={<Profile />} />
+						<Route path=":userid" element={<Profile />}>
+							<Route
+								path="following"
+								element={<FollowerFollowing type="following" />}
+							/>
+							<Route
+								path="followers"
+								element={<FollowerFollowing type="followers" />}
+							/>
+						</Route>
 					</Route>
 				</Route>
 				<Route path="logout/" element={<Logout />} />

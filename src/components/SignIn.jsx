@@ -42,6 +42,7 @@ const SignIn = () => {
 				"JWT " + localStorage.getItem("access_token");
 			navigate("/home");
 		} catch (err) {
+			console.log(err);
 			message.type = "danger";
 			message.value = err.response.data.detail;
 			setError({});

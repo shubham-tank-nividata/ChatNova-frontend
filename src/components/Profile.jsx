@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom/client";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link, Outlet } from "react-router-dom";
 import "../styles/profile.css";
-import axios from "axios";
-import axiosInstance from "../axios";
+import { axiosBasic } from "../axios";
 import "lightbox2/dist/css/lightbox.min.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js";
 import Spinner from "./Spinner";
 import { decode as atob } from "base-64";
+import FollowBtn from "./FollowBtn";
 
 const Profile = () => {
 	const { userid } = useParams();
@@ -37,15 +36,13 @@ const Profile = () => {
 		}
 	};
 
-	function onFileSelected(event) {}
-
 	const handleImageSubmit = (e) => {
 		e.preventDefault();
 
 		const config = {
 			headers: { "Content-Type": "multipart/form-data" },
 		};
-		const URL = `http://localhost:8000/api/users/profile/${userid}`;
+		const URL = `users/profile/${userid}`;
 
 		let formData = new FormData();
 		formData.append("username", userProfile.user.username);
@@ -56,7 +53,7 @@ const Profile = () => {
 		formData.append("bio", userProfile.bio);
 		formData.append("image", profileImage.image[0]);
 
-		axios
+		axiosBasic
 			.put(URL, formData, config)
 			.then((res) => {
 				window.location.href = `/profile/${userid}`;
@@ -69,7 +66,7 @@ const Profile = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const res = await axiosInstance.get(`users/profile/${userid}`);
+				const res = await axiosBasic.get(`users/profile/${userid}`);
 				setUserProfile(res.data);
 				setLoading(false);
 
@@ -159,15 +156,26 @@ const Profile = () => {
 							</p>
 						</section>
 
-						<section className="following text-center">
-							<h3>0</h3>
+						<Link to="./following" className="following text-center">
+							<h3>{userProfile.following_count}</h3>
 							<h5>Following</h5>
-						</section>
-						<section className="followers text-center">
-							<h3>0</h3>
+						</Link>
+						<Link to="./followers" className="followers text-center">
+							<h3>{userProfile.followers_count}</h3>
 							<h5>Followers</h5>
-						</section>
+						</Link>
+						<Outlet />
 					</div>
+					<p className="user-bio">
+						{userProfile.bio != "null" ? userProfile.bio : ""}
+					</p>
+					{loggedUserId != userid && (
+						<FollowBtn
+							loggeduserid={loggedUserId}
+							userid={userid}
+							setUserProfile={setUserProfile}
+						/>
+					)}
 				</>
 			)}
 		</div>

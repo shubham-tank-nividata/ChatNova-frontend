@@ -2,6 +2,9 @@ import axios from "axios";
 import { decode as atob } from "base-64";
 
 const baseURL = `http://127.0.0.1:8000/api/`;
+// const baseURL = `http://192.168.1.110:8000/api/`;
+
+const axiosBasic = axios.create({ baseURL });
 
 const axiosInstance = axios.create({
 	baseURL,
@@ -86,3 +89,4 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
+export { axiosBasic };

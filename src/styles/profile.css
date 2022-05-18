@@ -46,6 +46,13 @@ img.profile-pic-img {
 	background-color: rgb(212, 211, 211);
 	border-radius: 0.5rem;
 	transition: all 0.5s;
+	color: inherit;
+	text-decoration: none;
+}
+
+.following:hover,
+.followers:hover {
+	color: inherit;
 }
 
 .following:hover,
@@ -65,7 +72,7 @@ img.profile-pic-img {
 
 .input-container {
 	display: flex;
-	justify-content: end;
+	justify-content: flex-end;
 	padding-left: 1rem;
 	padding-right: 1rem;
 }
@@ -73,6 +80,107 @@ img.profile-pic-img {
 	margin-left: 0.3rem;
 	margin-right: 0.3rem;
 	cursor: pointer;
+}
+
+.user-bio {
+	margin-bottom: 2rem;
+}
+
+.btn-follow {
+	background-color: rgb(39, 134, 193);
+	border: none;
+	box-shadow: 0 0 0.3rem rgb(39, 134, 193);
+	margin-left: 0.5rem;
+}
+
+.btn-follow:hover,
+.btn-follow:focus {
+	background-color: rgb(43, 145, 208);
+}
+
+.btn-unfollow {
+	box-shadow: 0 0 0.3rem black;
+	background-color: rgb(253, 238, 238);
+	margin-left: 0.5rem;
+}
+.btn-unfollow:hover {
+	border: 0.05rem solid rgb(63, 63, 63);
+}
+
+.btn-unfollow:focus {
+	box-shadow: 0 0 0.3rem black;
+}
+
+.overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 2;
+}
+
+.follower-container {
+	max-width: 30rem;
+	background-color: white;
+	margin: 10vh auto;
+	border-radius: 0.5rem;
+}
+
+.follower-container header {
+	box-shadow: 0 0.05rem 0.3rem -0.05rem black;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+}
+
+.follower-container h4 {
+	padding: 1rem;
+}
+
+.nav-user-img {
+	height: 2.5rem;
+	width: 2.5rem;
+	padding: 0.1rem;
+	border: 1px solid white;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 0.8rem;
+}
+
+.follow-user {
+	margin: 0;
+	width: 100%;
+	padding: 0.8rem 3rem;
+}
+
+.follow-user p {
+	margin: 0;
+}
+
+.follow-user-name {
+	font-size: 1.2rem;
+}
+
+.follow-user-username {
+	text-decoration: none;
+	font-size: 0.9rem;
+	color: gray;
+}
+
+.follow-user-username:hover {
+	color: rgb(89, 89, 89);
+}
+
+.follow-user-img {
+	height: 3rem;
+	width: 3rem;
+	padding: 0.1rem;
+	box-shadow: 0 0 0.3rem #22334d;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 @media only screen and (max-width: 800px) {
@@ -86,5 +194,9 @@ img.profile-pic-img {
 	img.profile-pic-img {
 		width: 50vw;
 		height: 50vw;
+	}
+	.follow-user {
+		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 }

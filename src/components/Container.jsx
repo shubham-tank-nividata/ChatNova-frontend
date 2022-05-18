@@ -4,6 +4,7 @@ import "../styles/container.css";
 import axiosInstance from "../axios";
 import { decode as atob } from "base-64";
 import { FiLogOut } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
 
 const Container = () => {
 	const [user, setUser] = useState({});
@@ -56,17 +57,12 @@ const Container = () => {
 							<li className="nav-item">
 								<NavLink
 									className="nav-link"
-									to={`/profile/${
-										localStorage.getItem("access_token") &&
-										JSON.parse(
-											atob(localStorage.getItem("access_token").split(".")[1])
-										).user_id
-									}`}
+									to={""}
 									style={({ isActive }) => {
 										return { color: isActive ? "white" : "" };
 									}}
 								>
-									Profile
+									Search
 								</NavLink>
 							</li>
 						</ul>
@@ -78,9 +74,27 @@ const Container = () => {
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
 							>
+								<img
+									className="nav-user-img"
+									src={`http://localhost:8000${user.image}`}
+								/>
 								{user.name}{" "}
 							</p>
 							<ul className="dropdown-menu dropdown-menu-end">
+								<li>
+									<Link
+										className="dropdown-item text-secondary d-flex justify-content-between align-items-center"
+										to={`/profile/${
+											localStorage.getItem("access_token") &&
+											JSON.parse(
+												atob(localStorage.getItem("access_token").split(".")[1])
+											).user_id
+										}`}
+									>
+										<span>Profile</span>
+										<CgProfile />
+									</Link>
+								</li>
 								<li>
 									<Link
 										className="dropdown-item text-danger d-flex justify-content-between align-items-center"

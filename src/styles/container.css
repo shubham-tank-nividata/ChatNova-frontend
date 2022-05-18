@@ -36,8 +36,13 @@ span.navbar-text {
 	width: 2rem !important;
 }
 
+.dropdown-item svg {
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
 .dropdown-menu a:active {
-	background-color: #8fa0aa;
+	background-color: #c9c9c9;
 }
 
 @media only screen and (max-width: 400px) {
