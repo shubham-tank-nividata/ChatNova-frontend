@@ -1,5 +1,6 @@
 .profile-container {
 	margin-top: 1rem;
+	margin-bottom: 1rem;
 	background-color: #f0f8fc;
 	max-width: 50rem;
 	padding: 2rem;
@@ -83,6 +84,7 @@ img.profile-pic-img {
 }
 
 .user-bio {
+	margin-top: 1rem;
 	margin-bottom: 2rem;
 }
 
@@ -150,13 +152,16 @@ img.profile-pic-img {
 	margin-right: 0.8rem;
 }
 
-.follow-user {
+.follow-user,
+.search-result-user {
 	margin: 0;
 	width: 100%;
-	padding: 0.8rem 3rem;
+	padding-top: 0.8rem;
+	padding-bottom: 0.8rem;
 }
 
-.follow-user p {
+.follow-user p,
+.search-result-user p {
 	margin: 0;
 }
 
@@ -174,13 +179,24 @@ img.profile-pic-img {
 	color: rgb(89, 89, 89);
 }
 
-.follow-user-img {
+.follow-user-img,
+.search-user-img {
 	height: 3rem;
 	width: 3rem;
 	padding: 0.1rem;
 	box-shadow: 0 0 0.3rem #22334d;
 	border-radius: 50%;
 	object-fit: cover;
+}
+
+.search-user-img {
+	height: 2.5rem;
+	width: 2.5rem;
+}
+
+.search-user-username {
+	font-size: 0.8rem;
+	color: gray;
 }
 
 @media only screen and (max-width: 800px) {

@@ -5,6 +5,7 @@ import axiosInstance from "../axios";
 import { decode as atob } from "base-64";
 import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
+import SearchUser from "./SearchUser";
 
 const Container = () => {
 	const [user, setUser] = useState({});
@@ -62,10 +63,11 @@ const Container = () => {
 										return { color: isActive ? "white" : "" };
 									}}
 								>
-									Search
+									Explore
 								</NavLink>
 							</li>
 						</ul>
+						<SearchUser />
 
 						<div className="btn-group">
 							<p
@@ -110,7 +112,9 @@ const Container = () => {
 				</div>
 			</nav>
 
-			<Outlet />
+			<main className="main-outlet">
+				<Outlet />
+			</main>
 		</div>
 	);
 };
