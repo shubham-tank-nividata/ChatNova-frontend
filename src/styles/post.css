@@ -1,0 +1,92 @@
+.post {
+	border-radius: 0.5rem !important;
+}
+
+.post .card-body {
+	box-shadow: 0 0 0.3rem rgb(130, 130, 130);
+	border-radius: 0.5rem;
+}
+
+.post-userprofile-img {
+	height: 3rem;
+	width: 3rem;
+	padding: 0.1rem;
+	border: 1px solid white;
+	/* box-shadow: 0 0 2px black; */
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.post-user-name {
+	font-size: 1rem;
+	margin-bottom: 0;
+	font-weight: 700;
+}
+
+.post-user-username {
+	text-decoration: none;
+	font-size: 0.8rem;
+	color: gray;
+}
+
+.post-user-username:hover {
+	color: rgb(89, 89, 89);
+}
+
+.card-header {
+	margin: 0 !important;
+}
+
+.time {
+	color: rgb(107, 107, 107);
+	text-align: right;
+	font-size: 0.9rem;
+	margin-bottom: 0.1rem;
+}
+.date {
+	color: rgb(107, 107, 107);
+	text-align: right;
+	font-size: 0.8rem;
+	margin: 0;
+}
+
+.post main {
+	color: black;
+}
+
+.counts {
+	font-size: 0.8rem;
+}
+
+.counts svg {
+	margin-bottom: 0.2rem;
+}
+
+.liked {
+	color: blue !important;
+}
+
+.post footer {
+	border-top: 1px solid rgb(188, 188, 188);
+	margin: auto 0rem;
+	padding-top: 0.7rem;
+	margin-top: 0.7rem;
+}
+
+.post footer section div {
+	padding: 0.5rem 4rem;
+	border-radius: 0.4rem;
+}
+
+.post footer section div:hover {
+	background-color: rgb(229, 229, 229);
+}
+
+.post footer section div:hover:active {
+	background-color: rgb(221, 221, 221);
+}
+
+.comment-container {
+	border-left: 1px solid rgb(188, 188, 188);
+	border-right: 1px solid rgb(188, 188, 188);
+}

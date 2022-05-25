@@ -8,6 +8,7 @@ import Logout from "./components/Logout";
 import Container from "./components/Container";
 import Profile from "./components/Profile";
 import FollowerFollowing from "./components/FollowerFollowing";
+import Explore from "./components/Explore";
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 				<Route path="" element={<Container />}>
 					<Route path="" element={<Navigate replace to="home/" />} />
 					<Route path="home" element={<Home />} />
+					<Route path="explore" element={<Explore />} />
 					<Route path="profile">
 						<Route path=":userid" element={<Profile />}>
 							<Route

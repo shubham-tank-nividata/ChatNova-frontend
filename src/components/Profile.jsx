@@ -7,6 +7,7 @@ import "lightbox2/dist/js/lightbox-plus-jquery.js";
 import Spinner from "./Spinner";
 import { decode as atob } from "base-64";
 import FollowBtn from "./FollowBtn";
+import Post from "./Post/Post";
 
 const Profile = () => {
 	const { userid } = useParams();
@@ -18,17 +19,19 @@ const Profile = () => {
 	const [userProfile, setUserProfile] = useState({});
 	const [profileImage, setProfileImage] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [posts, setPosts] = useState([]);
+
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		if ([e.target.name] == "image") {
 			setProfileImage({ image: e.target.files });
-			var selectedFile = e.target.files[0];
-			var reader = new FileReader();
+			let selectedFile = e.target.files[0];
+			let reader = new FileReader();
 
-			var imgtag = document.querySelector(".lb-image");
-
+			let imgtag = document.querySelector(".lb-image");
 			reader.onload = function (e) {
+				console.log(e.target.result);
 				imgtag.src = e.target.result;
 			};
 
@@ -42,7 +45,7 @@ const Profile = () => {
 		const config = {
 			headers: { "Content-Type": "multipart/form-data" },
 		};
-		const URL = `users/profile/${userid}`;
+		const URL = `users/${userid}/posts`;
 
 		let formData = new FormData();
 		formData.append("username", userProfile.user.username);
@@ -66,8 +69,10 @@ const Profile = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const res = await axiosBasic.get(`users/profile/${userid}`);
-				setUserProfile(res.data);
+				const userProfileRes = await axiosBasic.get(`users/profile/${userid}`);
+				const userPostRes = await axiosBasic.get(`users/${userid}/posts`);
+				setUserProfile(userProfileRes.data);
+				setPosts(userPostRes.data);
 				setLoading(false);
 
 				// for image upload option on user profile
@@ -176,6 +181,11 @@ const Profile = () => {
 							setUserProfile={setUserProfile}
 						/>
 					)}
+					<section>
+						{posts.map((post) => (
+							<Post key={post.id} post={post} />
+						))}
+					</section>
 				</>
 			)}
 		</div>

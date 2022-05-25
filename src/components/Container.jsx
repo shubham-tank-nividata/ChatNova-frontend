@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, Link } from "react-router-dom";
 import "../styles/container.css";
 import axiosInstance from "../axios";
@@ -58,7 +58,7 @@ const Container = () => {
 							<li className="nav-item">
 								<NavLink
 									className="nav-link"
-									to={""}
+									to="/explore"
 									style={({ isActive }) => {
 										return { color: isActive ? "white" : "" };
 									}}
@@ -78,6 +78,7 @@ const Container = () => {
 							>
 								<img
 									className="nav-user-img"
+									alt=""
 									src={`http://localhost:8000${user.image}`}
 								/>
 								{user.name}{" "}
