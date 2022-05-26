@@ -9,6 +9,9 @@ import Container from "./components/Container";
 import Profile from "./components/Profile";
 import FollowerFollowing from "./components/FollowerFollowing";
 import Explore from "./components/Explore";
+import Overlay from "./components/Post/Overlay";
+import LikeList from "./components/Post/LikeList";
+import Comment from "./components/Post/Comment";
 
 function App() {
 	return (
@@ -16,7 +19,14 @@ function App() {
 			<Routes>
 				<Route path="" element={<Container />}>
 					<Route path="" element={<Navigate replace to="home/" />} />
-					<Route path="home" element={<Home />} />
+					<Route path="home" element={<Home />}>
+						<Route path="post">
+							<Route path=":postid" element={<Overlay />}>
+								<Route path="like" element={<LikeList />} />
+								<Route path="comment" element={<Comment />} />
+							</Route>
+						</Route>
+					</Route>
 					<Route path="explore" element={<Explore />} />
 					<Route path="profile">
 						<Route path=":userid" element={<Profile />}>
@@ -28,6 +38,12 @@ function App() {
 								path="followers"
 								element={<FollowerFollowing type="followers" />}
 							/>
+							<Route path="post">
+								<Route path=":postid" element={<Overlay />}>
+									<Route path="like" element={<LikeList />} />
+									<Route path="comment" element={<Comment />} />
+								</Route>
+							</Route>
 						</Route>
 					</Route>
 				</Route>

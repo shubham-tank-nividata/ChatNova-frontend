@@ -4,6 +4,7 @@ import CreatePost from "./Post/CreatePost";
 import axiosInstance from "../axios";
 import Spinner from "./Spinner";
 import Post from "./Post/Post";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
 	const [posts, setPosts] = useState(null);
@@ -31,6 +32,7 @@ const Home = () => {
 			) : (
 				posts.map((post) => <Post key={post.id} post={post} />)
 			)}
+			<Outlet />
 		</div>
 	);
 };

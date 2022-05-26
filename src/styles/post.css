@@ -62,6 +62,11 @@
 	margin-bottom: 0.2rem;
 }
 
+.counts a {
+	text-decoration: none;
+	color: gray;
+}
+
 .liked {
 	color: blue !important;
 }
@@ -73,20 +78,163 @@
 	margin-top: 0.7rem;
 }
 
-.post footer section div {
-	padding: 0.5rem 4rem;
+.post footer section div,
+.post footer section a {
+	color: inherit;
+	padding: 0.5rem 40%;
 	border-radius: 0.4rem;
 }
 
-.post footer section div:hover {
+.post footer section div:hover,
+.post footer section a:hover {
 	background-color: rgb(229, 229, 229);
 }
 
-.post footer section div:hover:active {
+.post footer section div:active,
+.post footer section a:active {
 	background-color: rgb(221, 221, 221);
 }
 
 .comment-container {
 	border-left: 1px solid rgb(188, 188, 188);
 	border-right: 1px solid rgb(188, 188, 188);
+}
+
+.lc-container {
+	max-width: 30rem;
+	background-color: white;
+	margin: 10vh auto;
+	border-radius: 0.5rem;
+}
+
+.lc-container nav {
+	font-size: 1.5rem;
+	box-shadow: 0 0.05rem 0.3rem -0.05rem black;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+}
+
+.like-link,
+.comment-link {
+	color: inherit;
+	text-decoration: none;
+	width: 50%;
+	text-align: center;
+	padding-top: 0.4rem;
+	padding-bottom: 0.2rem;
+	border-radius: 0.2rem;
+}
+
+.like-link:hover,
+.comment-link:hover {
+	color: rgb(96, 96, 208);
+	color: rgb(0, 0, 67);
+}
+
+.like-user {
+	text-decoration: none;
+	color: inherit;
+}
+
+.like-user:hover {
+	text-decoration: none;
+	color: inherit;
+}
+
+@media only screen and (max-width: 640px) {
+	.post header .col-1 {
+		width: 20%;
+		padding-left: 0;
+	}
+
+	.post header .col-9 {
+		width: 50%;
+		padding: 0;
+	}
+
+	.post header .col-2 {
+		width: 30%;
+	}
+}
+
+.user-comment-img {
+	height: 2.5rem;
+	width: 2.5rem;
+}
+
+.comment-list {
+	max-height: 50vh;
+	height: 50vh;
+	overflow-y: scroll;
+	overflow-y: overlay;
+}
+
+.comment-user-name {
+	font-size: 0.9rem;
+	margin: 0;
+}
+
+.single-comment {
+	border-bottom: 1px solid rgb(206, 206, 206);
+}
+
+.single-comment header {
+	width: 100%;
+}
+
+.single-comment header a {
+	text-decoration: none;
+	font-size: 0.8rem;
+}
+
+.single-comment header .row {
+	margin: 0;
+}
+
+.single-comment header a:hover {
+	color: rgb(143, 143, 143) !important;
+}
+
+.single-comment .time {
+	font-size: 0.8rem;
+	/* margin: 0; */
+}
+
+.single-comment .date {
+	font-size: 0.7rem;
+}
+
+.comment-text {
+	font-size: 0.9rem;
+	margin-left: 1.5rem;
+	margin-right: 1.5rem;
+	margin-bottom: 0.7rem;
+}
+
+.comment-input {
+	border-radius: 1rem;
+	border-right: none;
+	font-size: 0.9rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.comment-input:focus {
+	outline: none;
+	box-shadow: none;
+	border: 1px solid #ced4da;
+	border-right: none;
+}
+
+.comment-submit {
+	background-color: white;
+	border-radius: 1rem;
+}
+
+.comment-submit:hover {
+	color: rgb(47, 47, 90);
+}
+
+.comment-submit:active {
+	color: rgb(83, 83, 97);
 }

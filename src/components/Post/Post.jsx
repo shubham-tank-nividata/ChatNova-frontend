@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/post.css";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { BiLike, BiComment } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
-import { AiOutlineRetweet, AiFillLike } from "react-icons/ai";
+import { AiOutlineRetweet, AiTwotoneLike } from "react-icons/ai";
 import axiosInstance, { axiosBasic } from "../../axios";
 import { decode as atob } from "base-64";
 
@@ -45,6 +45,8 @@ const Post = ({
 			setLiked(res.data);
 			const likesres = await axiosBasic.get(`posts/${post_id}/likes`);
 			setLikesCount(likesres.data.length);
+			const commentsres = await axiosBasic.get(`posts/${post_id}/comments`);
+			setCommentsCount(commentsres.data.length);
 		})();
 	});
 
@@ -102,22 +104,30 @@ const Post = ({
 					)}
 				</main>
 				<section className="mt-3">
-					<p className="counts text-secondary m-0">
-						<BiLike size="1rem" /> {likesCount} <BsDot />{" "}
-						<BiComment size="1rem" /> {commentsCount}
+					<p className="counts m-0">
+						<Link to={`./post/${post_id}/like`}>
+							<BiLike size="1rem" /> {likesCount} <BsDot />{" "}
+						</Link>
+						<Link to={`./post/${post_id}/comment`}>
+							<BiComment size="1rem" /> {commentsCount}
+						</Link>
 					</p>
 				</section>
 
 				<footer className="row">
 					<section className="col-4 d-flex justify-content-center">
 						<div className="like" onClick={handleLike}>
-							<BiLike size="1.5rem" className={liked ? "liked" : ""} />
+							{liked ? (
+								<AiTwotoneLike size="1.5rem" className="liked" />
+							) : (
+								<BiLike size="1.5rem" />
+							)}
 						</div>
 					</section>
 					<section className="comment-container col-4 d-flex justify-content-center">
-						<div className="comment">
+						<Link className="comment" to={`./post/${post_id}/comment`}>
 							<BiComment size="1.5rem" />
-						</div>
+						</Link>
 					</section>
 					<section className="col-4 d-flex justify-content-center">
 						<div className="repost">
