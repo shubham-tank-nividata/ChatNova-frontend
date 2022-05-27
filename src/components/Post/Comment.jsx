@@ -4,8 +4,15 @@ import { useParams, Link } from "react-router-dom";
 import { MdSend } from "react-icons/md";
 import Spinner from "../Spinner";
 import { decode as atob } from "base-64";
+import { AiOutlineDelete } from "react-icons/ai";
 
-const SingleComment = ({ comment }) => {
+const SingleComment = ({
+	comment,
+	loggeduser,
+	postid,
+	rerender,
+	setRerender,
+}) => {
 	const date = new Date(comment.created_at);
 	const hours = date.getHours();
 	const time = `${hours > 12 ? hours % 12 : hours} : ${
@@ -14,6 +21,24 @@ const SingleComment = ({ comment }) => {
 	const date_created = `${date.toDateString().slice(4, 10)}, ${date
 		.toDateString()
 		.slice(11, 15)}`;
+
+	const decr = () => {
+		const c = document.querySelector(`.commentlink-${postid}`);
+		const child = c.childNodes[2];
+		c.replaceChild(document.createTextNode(parseInt(c.innerText) - 1), child);
+	};
+
+	const handleDelete = () => {
+		axiosInstance
+			.delete(`posts/${postid}/comments/${comment.id}/`)
+			.then((res) => {
+				decr();
+				setRerender(!rerender);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	return (
 		<div className="single-comment mb-3">
@@ -38,8 +63,28 @@ const SingleComment = ({ comment }) => {
 					<p className="date">{date_created}</p>
 				</div>
 			</header>
-			<main>
-				<p className="text-black comment-text mt-2">{comment.comment_text}</p>
+			<main className="row">
+				<p className="text-black comment-text col-11">{comment.comment_text}</p>
+				<div className="col-1">
+					{loggeduser == comment.user_id && (
+						<div className="btn-group dropup">
+							<AiOutlineDelete
+								size="1.3rem"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+								className="comment-delete-dropdown"
+							/>
+							<ul className="dropdown-menu">
+								<li
+									className="dropdown-item delete-option text-center text-danger"
+									onClick={handleDelete}
+								>
+									Delete
+								</li>
+							</ul>
+						</div>
+					)}
+				</div>
 			</main>
 		</div>
 	);
@@ -51,6 +96,8 @@ const Comment = () => {
 	const [comments, setComments] = useState([]);
 	const [commentInput, setCommentInput] = useState("");
 	const [loading, setLoading] = useState(true);
+	const [rerender, setRerender] = useState(true);
+
 	const user_id =
 		localStorage.getItem("access_token") &&
 		JSON.parse(atob(localStorage.getItem("access_token").split(".")[1]))
@@ -58,13 +105,19 @@ const Comment = () => {
 
 	useEffect(() => {
 		axiosBasic
-			.get(`posts/${postid}/comments`)
+			.get(`posts/${postid}/comments/`)
 			.then((res) => {
 				setComments(res.data);
 				setLoading(false);
 			})
 			.catch((err) => console.log(err));
-	});
+	}, [rerender]);
+
+	function incr() {
+		const c = document.querySelector(`.commentlink-${postid}`);
+		const child = c.childNodes[2];
+		c.replaceChild(document.createTextNode(parseInt(c.innerText) + 1), child);
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -72,13 +125,15 @@ const Comment = () => {
 			return;
 		}
 		axiosInstance
-			.post(`posts/${postid}/comments`, {
+			.post(`posts/${postid}/comments/`, {
 				user_id,
 				post_id: postid,
 				comment_text: commentInput,
 			})
 			.then((res) => {
 				setCommentInput("");
+				setRerender(!rerender);
+				incr();
 			})
 			.catch((err) => {
 				console.log(err);
@@ -96,7 +151,14 @@ const Comment = () => {
 					<h5 className="text-secondary text-center">No comments yet</h5>
 				) : (
 					comments.map((comment) => (
-						<SingleComment key={comment.id} comment={comment} />
+						<SingleComment
+							key={comment.id}
+							comment={comment}
+							loggeduser={user_id}
+							postid={postid}
+							rerender={rerender}
+							setRerender={setRerender}
+						/>
 					))
 				)}
 			</div>
@@ -104,7 +166,7 @@ const Comment = () => {
 				<div className="input-group">
 					<input
 						type="text"
-						className="form-control pt-1 pb-1 comment-input"
+						className="form-control comment-input"
 						placeholder="write comment ..."
 						value={commentInput}
 						onChange={(e) => setCommentInput(e.target.value)}

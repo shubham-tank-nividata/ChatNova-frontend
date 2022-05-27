@@ -204,11 +204,9 @@
 	font-size: 0.7rem;
 }
 
-.comment-text {
+.single-comment main {
 	font-size: 0.9rem;
-	margin-left: 1.5rem;
-	margin-right: 1.5rem;
-	margin-bottom: 0.7rem;
+	margin: 0.7rem 0.8rem;
 }
 
 .comment-input {
@@ -237,4 +235,22 @@
 
 .comment-submit:active {
 	color: rgb(83, 83, 97);
+}
+
+.comment-delete-dropdown {
+	cursor: pointer;
+	color: rgb(85, 85, 85);
+}
+
+.comment-text {
+	margin-bottom: 0;
+}
+
+.single-comment ul.dropdown-menu {
+	box-shadow: 0 0 0.2rem gray !important;
+	width: 50px;
+}
+
+.delete-option:active {
+	background-color: rgb(219, 219, 219);
 }

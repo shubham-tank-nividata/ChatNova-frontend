@@ -6,7 +6,7 @@ import { decode as atob } from "base-64";
 import { useNavigate } from "react-router-dom";
 import { axiosBasic } from "../../axios";
 
-const CreatePost = () => {
+const CreatePost = ({ posts, setPosts }) => {
 	const [content, setContent] = useState("");
 	const [image, setImage] = useState(null);
 
@@ -58,10 +58,11 @@ const CreatePost = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (!content) return;
 		const config = {
 			headers: { "Content-Type": "multipart/form-data" },
 		};
-		const URL = `users/${userid}/posts`;
+		const URL = `users/${userid}/posts/`;
 
 		let formData = new FormData();
 
@@ -72,7 +73,9 @@ const CreatePost = () => {
 		axiosBasic
 			.post(URL, formData, config)
 			.then((res) => {
-				window.location.href = `/home`;
+				setContent("");
+				setImage(null);
+				setPosts([res.data, ...posts]);
 			})
 			.catch((err) => {
 				console.log(err);

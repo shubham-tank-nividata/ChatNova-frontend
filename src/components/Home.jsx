@@ -12,7 +12,7 @@ const Home = () => {
 
 	useEffect(() => {
 		axiosInstance
-			.get("following/posts")
+			.get("following/posts/")
 			.then((res) => {
 				setPosts(res.data);
 				setLoading(false);
@@ -24,13 +24,15 @@ const Home = () => {
 
 	return (
 		<div className="home-container container">
-			<CreatePost />
+			<CreatePost posts={posts} setPosts={setPosts} />
 			{loading ? (
 				<div className="d-flex justify-content-center mt-3">
 					<Spinner size="1.3rem" />
 				</div>
 			) : (
-				posts.map((post) => <Post key={post.id} post={post} />)
+				posts.map((post) => (
+					<Post key={post.id} post={post} posts={posts} setPosts={setPosts} />
+				))
 			)}
 			<Outlet />
 		</div>

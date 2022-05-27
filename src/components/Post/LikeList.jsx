@@ -39,7 +39,7 @@ const LikeList = () => {
 
 	useEffect(() => {
 		axiosBasic
-			.get(`http://localhost:8000/api/posts/${postid}/likes`)
+			.get(`http://localhost:8000/api/posts/${postid}/likes/`)
 			.then((res) => {
 				setLoading(false);
 				setLikes(res.data);

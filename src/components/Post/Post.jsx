@@ -3,7 +3,11 @@ import "../../styles/post.css";
 import { Link, Outlet } from "react-router-dom";
 import { BiLike, BiComment } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
-import { AiOutlineRetweet, AiTwotoneLike } from "react-icons/ai";
+import {
+	AiOutlineRetweet,
+	AiTwotoneLike,
+	AiOutlineDelete,
+} from "react-icons/ai";
 import axiosInstance, { axiosBasic } from "../../axios";
 import { decode as atob } from "base-64";
 
@@ -18,6 +22,8 @@ const Post = ({
 		image,
 		created_at,
 	},
+	posts,
+	setPosts,
 }) => {
 	const loggeduserid =
 		localStorage.getItem("access_token") &&
@@ -40,20 +46,31 @@ const Post = ({
 	useEffect(() => {
 		(async () => {
 			const res = await axiosBasic.get(
-				`users/${loggeduserid}/likes/${post_id}`
+				`users/${loggeduserid}/likes/${post_id}/`
 			);
 			setLiked(res.data);
-			const likesres = await axiosBasic.get(`posts/${post_id}/likes`);
+			const likesres = await axiosBasic.get(`posts/${post_id}/likes/`);
 			setLikesCount(likesres.data.length);
-			const commentsres = await axiosBasic.get(`posts/${post_id}/comments`);
+			const commentsres = await axiosBasic.get(`posts/${post_id}/comments/`);
 			setCommentsCount(commentsres.data.length);
 		})();
 	});
 
+	const handleDelete = () => {
+		axiosInstance
+			.delete(`posts/${post_id}/`)
+			.then((res) => {
+				setPosts(posts.filter((post) => post.id != post_id));
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	const handleLike = () => {
 		if (liked) {
 			axiosInstance
-				.delete(`users/${loggeduserid}/likes/${post_id}`)
+				.delete(`users/${loggeduserid}/likes/${post_id}/`)
 				.then((res) => {
 					setLiked(false);
 				})
@@ -62,7 +79,7 @@ const Post = ({
 				});
 		} else {
 			axiosInstance
-				.post(`users/${loggeduserid}/likes/${post_id}`)
+				.post(`users/${loggeduserid}/likes/${post_id}/`)
 				.then((res) => {
 					setLiked(true);
 				})
@@ -94,7 +111,29 @@ const Post = ({
 					</div>
 				</header>
 				<main className="mt-4">
-					<p className="card-text">{content}</p>
+					<div className="row">
+						<p className="card-text col-11">{content}</p>
+						<div className="col-1 text-end">
+							{loggeduserid == user_id && (
+								<div className="btn-group dropup">
+									<AiOutlineDelete
+										size="1.3rem"
+										data-bs-toggle="dropdown"
+										aria-expanded="false"
+										className="comment-delete-dropdown"
+									/>
+									<ul className="dropdown-menu">
+										<li
+											className="dropdown-item delete-option text-center text-danger"
+											onClick={handleDelete}
+										>
+											Delete Post
+										</li>
+									</ul>
+								</div>
+							)}
+						</div>
+					</div>
 					{image && (
 						<img
 							className="card-img-top p-2"
@@ -108,7 +147,10 @@ const Post = ({
 						<Link to={`./post/${post_id}/like`}>
 							<BiLike size="1rem" /> {likesCount} <BsDot />{" "}
 						</Link>
-						<Link to={`./post/${post_id}/comment`}>
+						<Link
+							to={`./post/${post_id}/comment`}
+							className={`commentlink-${post_id}`}
+						>
 							<BiComment size="1rem" /> {commentsCount}
 						</Link>
 					</p>
