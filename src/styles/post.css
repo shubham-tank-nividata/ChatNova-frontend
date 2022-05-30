@@ -12,7 +12,14 @@
 	width: 3rem;
 	padding: 0.1rem;
 	border: 1px solid white;
-	/* box-shadow: 0 0 2px black; */
+	border-radius: 50%;
+	object-fit: cover;
+}
+.repost-userprofile-img {
+	height: 2.8rem;
+	width: 2.8em;
+	padding: 0.1rem;
+	border: 1px solid white;
 	border-radius: 50%;
 	object-fit: cover;
 }
@@ -23,13 +30,26 @@
 	font-weight: 700;
 }
 
+.repost-user-name {
+	font-size: 0.9rem;
+	margin-bottom: 0;
+	font-weight: 700;
+}
+
 .post-user-username {
 	text-decoration: none;
 	font-size: 0.8rem;
 	color: gray;
 }
 
-.post-user-username:hover {
+.repost-user-username {
+	font-size: 0.7rem !important;
+	text-decoration: none;
+	color: gray;
+}
+
+.post-user-username:hover,
+.repost-user-username:hover {
 	color: rgb(89, 89, 89);
 }
 
@@ -76,6 +96,15 @@
 	margin: auto 0rem;
 	padding-top: 0.7rem;
 	margin-top: 0.7rem;
+}
+
+.post .card-text {
+	text-align: justify;
+}
+
+.repost .card-text {
+	font-size: 0.9rem;
+	text-align: justify;
 }
 
 .post footer section div,

@@ -70,7 +70,7 @@ const Profile = () => {
 		(async () => {
 			try {
 				const userProfileRes = await axiosBasic.get(`users/profile/${userid}`);
-				const userPostRes = await axiosBasic.get(`users/${userid}/posts`);
+				const userPostRes = await axiosBasic.get(`users/${userid}/posts/`);
 				setUserProfile(userProfileRes.data);
 				setPosts(userPostRes.data);
 				setLoading(false);
@@ -155,7 +155,7 @@ const Profile = () => {
 
 					<div className="d-flex flex-wrap justify-content-between">
 						<section className="user-detail flex-fill">
-							<h3>{userProfile.name}</h3>
+							<h3>{userProfile.name} </h3>
 							<p className="text-secondary">
 								@{userProfile && userProfile.user.username}
 							</p>
@@ -183,7 +183,12 @@ const Profile = () => {
 					)}
 					<section>
 						{posts.map((post) => (
-							<Post key={post.id} post={post} />
+							<Post
+								key={post.id}
+								post={post}
+								posts={posts}
+								setPosts={setPosts}
+							/>
 						))}
 					</section>
 				</>

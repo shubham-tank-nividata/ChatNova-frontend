@@ -6,9 +6,11 @@ import { decode as atob } from "base-64";
 import { FiLogOut } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
 import SearchUser from "./SearchUser";
+import CreateRepost from "../contexts/CreateRepost";
 
 const Container = () => {
 	const [user, setUser] = useState({});
+	const [repost, setRepost] = useState(null);
 
 	useEffect(() => {
 		(async () => {
@@ -114,7 +116,9 @@ const Container = () => {
 			</nav>
 
 			<main className="main-outlet">
-				<Outlet />
+				<CreateRepost.Provider value={{ repost, setRepost }}>
+					<Outlet />
+				</CreateRepost.Provider>
 			</main>
 		</div>
 	);

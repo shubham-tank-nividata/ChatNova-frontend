@@ -47,7 +47,7 @@ const LikeList = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-	});
+	}, []);
 
 	return loading ? (
 		<div className="d-flex justify-content-center p-4">

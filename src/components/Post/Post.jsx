@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/post.css";
-import { Link, Outlet } from "react-router-dom";
-import { BiLike, BiComment } from "react-icons/bi";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { BiLike, BiComment, BiRepost } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import {
 	AiOutlineRetweet,
@@ -10,6 +10,8 @@ import {
 } from "react-icons/ai";
 import axiosInstance, { axiosBasic } from "../../axios";
 import { decode as atob } from "base-64";
+import Repost from "./Repost";
+import CreateRepost from "../../contexts/CreateRepost";
 
 const Post = ({
 	post: {
@@ -21,14 +23,21 @@ const Post = ({
 		profile_image,
 		image,
 		created_at,
+		repost,
+		likes_count,
+		comments_count,
+		repost_count,
 	},
 	posts,
 	setPosts,
 }) => {
+	const navigate = useNavigate();
 	const loggeduserid =
 		localStorage.getItem("access_token") &&
 		JSON.parse(atob(localStorage.getItem("access_token").split(".")[1]))
 			.user_id;
+
+	const createRepost = useContext(CreateRepost);
 
 	const date = new Date(created_at);
 	const hours = date.getHours();
@@ -40,8 +49,8 @@ const Post = ({
 		.slice(11, 15)}`;
 
 	const [liked, setLiked] = useState(false);
-	const [likesCount, setLikesCount] = useState(0);
-	const [commentsCount, setCommentsCount] = useState(0);
+	const [likesCount, setLikesCount] = useState(likes_count);
+	// const [commentsCount, setCommentsCount] = useState(comments_count);
 
 	useEffect(() => {
 		(async () => {
@@ -49,10 +58,6 @@ const Post = ({
 				`users/${loggeduserid}/likes/${post_id}/`
 			);
 			setLiked(res.data);
-			const likesres = await axiosBasic.get(`posts/${post_id}/likes/`);
-			setLikesCount(likesres.data.length);
-			const commentsres = await axiosBasic.get(`posts/${post_id}/comments/`);
-			setCommentsCount(commentsres.data.length);
 		})();
 	});
 
@@ -61,6 +66,10 @@ const Post = ({
 			.delete(`posts/${post_id}/`)
 			.then((res) => {
 				setPosts(posts.filter((post) => post.id != post_id));
+				if (repost) {
+					const repostCount = document.querySelector(`#repost-count-${repost}`);
+					repostCount.innerText = parseInt(repostCount.innerText) - 1;
+				}
 			})
 			.catch((err) => {
 				console.log(err);
@@ -73,6 +82,7 @@ const Post = ({
 				.delete(`users/${loggeduserid}/likes/${post_id}/`)
 				.then((res) => {
 					setLiked(false);
+					setLikesCount(likesCount - 1);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -82,11 +92,18 @@ const Post = ({
 				.post(`users/${loggeduserid}/likes/${post_id}/`)
 				.then((res) => {
 					setLiked(true);
+					setLikesCount(likesCount + 1);
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 		}
+	};
+
+	const handleRepost = () => {
+		createRepost.setRepost(post_id);
+		navigate("/home");
+		document.querySelector(".main-outlet").scrollTo(0, 0);
 	};
 
 	return (
@@ -111,10 +128,10 @@ const Post = ({
 					</div>
 				</header>
 				<main className="mt-4">
-					<div className="row">
+					<div className={`row ${loggeduserid == user_id ? "" : "mb-3"}`}>
 						<p className="card-text col-11">{content}</p>
-						<div className="col-1 text-end">
-							{loggeduserid == user_id && (
+						{loggeduserid == user_id && (
+							<div className="col-1 text-end">
 								<div className="btn-group dropup">
 									<AiOutlineDelete
 										size="1.3rem"
@@ -131,8 +148,8 @@ const Post = ({
 										</li>
 									</ul>
 								</div>
-							)}
-						</div>
+							</div>
+						)}
 					</div>
 					{image && (
 						<img
@@ -142,7 +159,8 @@ const Post = ({
 						/>
 					)}
 				</main>
-				<section className="mt-3">
+				{repost && <Repost postid={repost} />}
+				<section>
 					<p className="counts m-0">
 						<Link to={`./post/${post_id}/like`}>
 							<BiLike size="1rem" /> {likesCount} <BsDot />{" "}
@@ -151,8 +169,12 @@ const Post = ({
 							to={`./post/${post_id}/comment`}
 							className={`commentlink-${post_id}`}
 						>
-							<BiComment size="1rem" /> {commentsCount}
+							<BiComment size="1rem" /> {comments_count} <BsDot />{" "}
 						</Link>
+						<BiRepost size="1.4rem" style={{ color: "#9b9b9b" }} />{" "}
+						<span style={{ color: "gray" }} id={`repost-count-${post_id}`}>
+							{repost_count}
+						</span>
 					</p>
 				</section>
 
@@ -172,7 +194,7 @@ const Post = ({
 						</Link>
 					</section>
 					<section className="col-4 d-flex justify-content-center">
-						<div className="repost">
+						<div className="repost" onClick={handleRepost}>
 							<AiOutlineRetweet size="1.5rem" />
 						</div>
 					</section>

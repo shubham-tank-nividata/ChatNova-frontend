@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../styles/home.css";
 import { BiImageAlt } from "react-icons/bi";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { decode as atob } from "base-64";
 import { useNavigate } from "react-router-dom";
 import { axiosBasic } from "../../axios";
+import CreateRepost from "../../contexts/CreateRepost";
+import Repost from "./Repost";
 
 const CreatePost = ({ posts, setPosts }) => {
+	const createRepost = useContext(CreateRepost);
+
 	const [content, setContent] = useState("");
 	const [image, setImage] = useState(null);
 
@@ -69,6 +73,9 @@ const CreatePost = ({ posts, setPosts }) => {
 		formData.append("user", userid);
 		formData.append("content", content);
 		if (image) formData.append("image", image);
+		if (createRepost.repost) {
+			formData.append("repost", createRepost.repost);
+		}
 
 		axiosBasic
 			.post(URL, formData, config)
@@ -76,6 +83,11 @@ const CreatePost = ({ posts, setPosts }) => {
 				setContent("");
 				setImage(null);
 				setPosts([res.data, ...posts]);
+				const repostCount = document.querySelector(
+					`#repost-count-${createRepost.repost}`
+				);
+				repostCount.innerText = parseInt(repostCount.innerText) + 1;
+				createRepost.setRepost(null);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -103,6 +115,20 @@ const CreatePost = ({ posts, setPosts }) => {
 					/>
 					<img src="" alt="" className="uploaded-image" />
 				</div>
+				{createRepost.repost && (
+					<div className="create-repost p-4">
+						<div className="text-end">
+							<AiOutlineCloseCircle
+								className="uploaded-image-cancel"
+								size="1.2rem"
+								onClick={() => {
+									createRepost.setRepost(null);
+								}}
+							/>
+						</div>
+						<Repost postid={createRepost.repost} />
+					</div>
+				)}
 				<div className="d-flex justify-content-between align-items-center mt-2">
 					<div className="input-group">
 						<label htmlFor="add-image-input" className="add-image-label">
