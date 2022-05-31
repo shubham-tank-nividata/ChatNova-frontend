@@ -12,6 +12,7 @@ import Explore from "./components/Explore";
 import Overlay from "./components/Post/Overlay";
 import LikeList from "./components/Post/LikeList";
 import Comment from "./components/Post/Comment";
+import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
 	return (
@@ -38,6 +39,7 @@ function App() {
 								path="followers"
 								element={<FollowerFollowing type="followers" />}
 							/>
+							<Route path="update" element={<UpdateProfile />} />
 							<Route path="post">
 								<Route path=":postid" element={<Overlay />}>
 									<Route path="like" element={<LikeList />} />

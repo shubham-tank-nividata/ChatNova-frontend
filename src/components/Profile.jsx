@@ -31,7 +31,6 @@ const Profile = () => {
 
 			let imgtag = document.querySelector(".lb-image");
 			reader.onload = function (e) {
-				console.log(e.target.result);
 				imgtag.src = e.target.result;
 			};
 
@@ -45,7 +44,7 @@ const Profile = () => {
 		const config = {
 			headers: { "Content-Type": "multipart/form-data" },
 		};
-		const URL = `users/${userid}/posts`;
+		const URL = `users/profile/${userid}`;
 
 		let formData = new FormData();
 		formData.append("username", userProfile.user.username);
@@ -171,15 +170,23 @@ const Profile = () => {
 						</Link>
 						<Outlet />
 					</div>
-					<p className="user-bio">
-						{userProfile.bio != "null" ? userProfile.bio : ""}
-					</p>
-					{loggedUserId != userid && (
+					{userProfile.bio !== "null" && (
+						<p className="user-bio">{userProfile.bio}</p>
+					)}
+					{loggedUserId != userid ? (
 						<FollowBtn
 							loggeduserid={loggedUserId}
 							userid={userid}
 							setUserProfile={setUserProfile}
 						/>
+					) : (
+						<button
+							className="btn btn-outline-primary edit-profile-btn"
+							onClick={() => navigate("./update")}
+						>
+							{" "}
+							Edit profile{" "}
+						</button>
 					)}
 					<section>
 						{posts.map((post) => (

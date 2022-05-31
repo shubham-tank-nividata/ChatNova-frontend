@@ -84,7 +84,7 @@ img.profile-pic-img {
 }
 
 .user-bio {
-	margin-top: 1rem;
+	/* margin-top: 1rem; */
 	margin-bottom: 2rem;
 }
 
@@ -125,7 +125,8 @@ img.profile-pic-img {
 	z-index: 2;
 }
 
-.follower-container {
+.follower-container,
+.update-profile-container {
 	max-width: 30rem;
 	background-color: white;
 	margin: 10vh auto;
@@ -215,4 +216,51 @@ img.profile-pic-img {
 		padding-left: 1rem;
 		padding-right: 1rem;
 	}
+}
+
+.edit-profile-btn {
+	border: 1px solid rgb(39, 134, 193);
+	color: rgb(39, 134, 193);
+}
+
+.edit-profile-btn:hover {
+	background-color: inherit;
+	border: 1px solid rgb(41, 91, 122);
+	color: rgb(41, 91, 122);
+}
+
+.edit-profile-btn:focus,
+.profile-update-btn:focus,
+.profile-update-cancel-btn:focus {
+	box-shadow: none;
+}
+
+.edit-profile-btn:active {
+	box-shadow: none;
+	border: 1px solid rgb(98, 140, 168);
+	color: rgb(98, 140, 168);
+}
+
+.update-profile-container {
+	max-width: 35rem;
+	padding: 2rem;
+}
+
+.update-profile-container input {
+	border-radius: 1.5rem;
+}
+
+.profile-update-btn {
+	color: white;
+	background-color: rgb(39, 134, 193);
+	margin-right: 1rem;
+}
+
+.profile-update-btn:hover {
+	color: white;
+	background-color: rgb(55, 144, 199);
+}
+
+.profile-update-btn:active {
+	background-color: rgb(78, 152, 198);
 }
